@@ -280,6 +280,9 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 - [x] Use Tailwind classes or CSS transitions for smooth fade
 - [x] Test: Click background and verify UI hides, click again to restore
 
+#### 4.2 Focus Mode Visual Polish
+- [x] Implement smooth transitions and cursor feedback
+
 ---
 
 ### Phase 5: Error Handling & Edge Cases
@@ -317,19 +320,19 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 - [x] Test: Check Network tab for unnecessary requests
 
 #### 6.2 Accessibility
-- [ ] Add `alt` text to images using APOD title
-- [ ] Ensure modal can be closed with `Escape` key
-- [ ] Add ARIA labels to icon buttons (calendar, share, close)
-- [ ] Test keyboard navigation (Tab through interactive elements)
-- [ ] Test with screen reader if possible
+- [x] Add `alt` text to images using APOD title
+- [x] Ensure modal can be closed with `Escape` key
+- [x] Add ARIA labels to icon buttons (calendar, share, close)
+- [x] Test keyboard navigation (Tab through interactive elements)
+- [x] Test with screen reader if possible
 
 #### 6.3 Responsive Design
-- [ ] Test layout on mobile (320px width)
-- [ ] Test layout on tablet (768px width)
-- [ ] Test layout on desktop (1920px width)
-- [ ] Ensure content card doesn't overflow on small screens
-- [ ] Adjust text sizes for readability on mobile
-- [ ] Test: Use browser DevTools device emulation
+- [x] Test layout on mobile (320px width)
+- [x] Test layout on tablet (768px width)
+- [x] Test layout on desktop (1920px width)
+- [x] Ensure content card doesn't overflow on small screens
+- [x] Adjust text sizes for readability on mobile
+- [x] Test: Use browser DevTools device emulation
 
 #### 6.4 Final Visual Polish
 - [ ] Verify readability overlay darkness (adjust opacity if needed)
