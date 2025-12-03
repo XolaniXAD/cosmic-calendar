@@ -11,8 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files in /public
-app.use(express.static("public"));
+// Serve static files in /public with caching headers
+app.use(express.static("public", {
+    maxAge: '1d',  // Cache static assets for 1 day
+    etag: true,    // Enable ETag for cache validation
+    lastModified: true
+}));
 
 // View engine (EJS example — you can change this)
 app.set("view engine", "ejs");

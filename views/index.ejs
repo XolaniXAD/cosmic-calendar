@@ -67,6 +67,7 @@
                     <div
                         class="absolute inset-0 bg-center bg-no-repeat bg-cover"
                         data-alt="<%= locals.apod.title %>"
+                        loading="lazy"
                         style='background-image: url("<%= locals.apod.url %>");'>
                     </div>
                 <% } else if (locals.apod.media_type === 'video') { %>
@@ -77,6 +78,7 @@
                             src="<%= locals.apod.url %>"
                             title="<%= locals.apod.title %>"
                             frameborder="0"
+                            loading="lazy"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen>
                         </iframe>

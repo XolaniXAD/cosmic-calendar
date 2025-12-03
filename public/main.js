@@ -1,3 +1,14 @@
+// ========== UTILITY FUNCTIONS ==========
+// Debounce prevents a function from being called too frequently
+// Useful for rate limiting API calls during rapid user interactions
+function debounce(func, delay) {
+    let timeoutId;
+    return function(...args) {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
 // ========== STATE MANAGEMENT ==========
 // This is the single source of truth for our app's UI state
 // Similar to React's state management, but using vanilla JavaScript
@@ -67,8 +78,9 @@ function closeModal() {
 // ========== APOD FETCHING ==========
 // This is the core function that fetches APOD data from our API
 // It's async because we're making a network request
+// Note: This is the internal function - wrapped in debounce below
 
-async function fetchAPOD(date) {
+async function fetchAPODInternal(date) {
     // Show loading spinner and clear any previous errors
     setState({ isLoading: true, error: null });
     
@@ -124,6 +136,9 @@ async function fetchAPOD(date) {
         alert(errorMessage);
     }
 }
+
+// Create debounced version to prevent rapid API calls (300ms delay)
+const fetchAPOD = debounce(fetchAPODInternal, 300);
 
 // ========== UPDATE DOM ==========
 // These functions handle updating the visual elements on the page

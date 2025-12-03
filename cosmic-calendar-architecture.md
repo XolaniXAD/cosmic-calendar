@@ -269,58 +269,52 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 ### Phase 4: Focus Mode (Immersive Experience)
 
 #### 4.1 Implement Focus Mode Toggle
-- [ ] Add click event listener to background/media container
-- [ ] On click, toggle `state.isFocusMode`
-- [ ] When `isFocusMode = true`:
+- [x] Add click event listener to background/media container
+- [x] On click, toggle `state.isFocusMode`
+- [x] When `isFocusMode = true`:
   - Hide header (calendar button and title)
   - Hide content card
   - Keep only background visible
-- [ ] When `isFocusMode = false`:
+- [x] When `isFocusMode = false`:
   - Show all UI elements
-- [ ] Use Tailwind classes or CSS transitions for smooth fade
-- [ ] Test: Click background and verify UI hides, click again to restore
-
-#### 4.2 Focus Mode Visual Polish
-- [ ] Add subtle cursor change on hover over media (e.g., `cursor: zoom-in`)
-- [ ] Add transition animations for UI hide/show (0.3s fade)
-- [ ] Ensure focus mode works for both images and videos
-- [ ] Test across different APOD types (images, YouTube embeds)
+- [x] Use Tailwind classes or CSS transitions for smooth fade
+- [x] Test: Click background and verify UI hides, click again to restore
 
 ---
 
 ### Phase 5: Error Handling & Edge Cases
 
 #### 5.1 Client-Side Error Display
-- [ ] Add error message container in EJS (hidden by default)
-- [ ] Style error with red background or warning icon
-- [ ] Display errors from `state.error` in the content card area
-- [ ] Add "Try Again" button that resets error state
-- [ ] Test: Manually trigger errors (invalid date, network failure)
+- [x] Add error message container in EJS (hidden by default)
+- [x] Style error with red background or warning icon
+- [x] Display errors from `state.error` in the content card area
+- [x] Add "Try Again" button that resets error state
+- [x] Test: Manually trigger errors (invalid date, network failure)
 
 #### 5.2 Date Validation
-- [ ] Set min date on date picker: `1995-06-16` (first APOD)
-- [ ] Set max date on date picker: today's date
-- [ ] Validate date format before sending to API
-- [ ] Show user-friendly message for invalid dates
-- [ ] Test: Try selecting dates outside valid range
+- [x] Set min date on date picker: `1995-06-16` (first APOD)
+- [x] Set max date on date picker: today's date
+- [x] Validate date format before sending to API
+- [x] Show user-friendly message for invalid dates
+- [x] Test: Try selecting dates outside valid range
 
 #### 5.3 Video Handling
-- [ ] For YouTube videos, ensure iframe has proper attributes:
+- [x] For YouTube videos, ensure iframe has proper attributes:
   - `allow="autoplay; encrypted-media"`
   - Proper aspect ratio (16:9)
-- [ ] Add fallback for videos that don't embed properly
-- [ ] Test with known video APODs (search NASA APOD archive)
+- [x] Add fallback for videos that don't embed properly
+- [x] Test with known video APODs (search NASA APOD archive)
 
 ---
 
 ### Phase 6: Polish & Optimization
 
 #### 6.1 Performance Optimization
-- [ ] Add caching headers for static assets
-- [ ] Preload critical fonts in HTML `<head>`
-- [ ] Optimize image loading: add `loading="lazy"` for non-critical images
-- [ ] Consider rate limiting API calls (debounce rapid date changes)
-- [ ] Test: Check Network tab for unnecessary requests
+- [x] Add caching headers for static assets
+- [x] Preload critical fonts in HTML `<head>`
+- [x] Optimize image loading: add `loading="lazy"` for non-critical images
+- [x] Consider rate limiting API calls (debounce rapid date changes)
+- [x] Test: Check Network tab for unnecessary requests
 
 #### 6.2 Accessibility
 - [ ] Add `alt` text to images using APOD title
