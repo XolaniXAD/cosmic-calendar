@@ -7,3 +7,6 @@ yarn.lock
 .vscode/
 .idea/
 *.pdf
+
+# Next.js build output only
+.next/
