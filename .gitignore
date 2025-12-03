@@ -1,5 +1,6 @@
 node_modules/
 .env
+.env.local
 *.log
 .DS_Store
 package-lock.json
@@ -7,3 +8,11 @@ yarn.lock
 .vscode/
 .idea/
 *.pdf
+
+# Next.js files (only for vercel-nextjs branch)
+.next/
+app/
+next.config.js
+postcss.config.js
+tailwind.config.js
+NEXTJS-CONVERSION-COMPLETE.md
