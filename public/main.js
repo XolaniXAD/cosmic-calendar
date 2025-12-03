@@ -137,7 +137,10 @@ function closeFavoritesModal() {
 
 function renderFavorites() {
     const favorites = getFavorites();
+    console.log('📚 Raw favorites from localStorage:', favorites);
     const favoritesArray = Object.values(favorites);
+    console.log('📋 Favorites array:', favoritesArray);
+    
     const grid = document.getElementById('favorites-grid');
     const empty = document.getElementById('favorites-empty');
     const count = document.getElementById('favorites-count');
@@ -163,45 +166,86 @@ function renderFavorites() {
     // Sort by date (newest first)
     favoritesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
     
-    // Render favorites
-    grid.innerHTML = favoritesArray.map(apod => {
-        const isVideo = apod.media_type === 'video';
-        const thumbnailUrl = isVideo ? `https://img.youtube.com/vi/${getYouTubeId(apod.url)}/maxresdefault.jpg` : apod.url;
-        
-        return `
-            <div class="relative group cursor-pointer rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 transition-all border border-white/10 hover:border-primary/50"
-                 onclick="loadFavoriteApod('${apod.date}')">
-                <!-- Thumbnail -->
-                <div class="aspect-video relative overflow-hidden">
-                    <img src="${thumbnailUrl}" 
-                         alt="${apod.title}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                         loading="lazy"
-                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2220%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+    // Render favorites - filter out any invalid entries
+    grid.innerHTML = favoritesArray
+        .filter(apod => {
+            // Ensure apod is an object with required properties
+            if (!apod || typeof apod !== 'object' || typeof apod === 'string') {
+                console.error('❌ Invalid favorite entry (not an object):', apod);
+                return false;
+            }
+            if (!apod.date || !apod.title || !apod.url) {
+                console.error('❌ Invalid favorite entry (missing properties):', apod);
+                return false;
+            }
+            return true;
+        })
+        .map(apod => {
+            console.log('🎨 Rendering favorite:', apod);
+            const isVideo = apod.media_type === 'video';
+            const thumbnailUrl = isVideo ? `https://img.youtube.com/vi/${getYouTubeId(apod.url)}/maxresdefault.jpg` : apod.url;
+            
+            return `
+                <div class="relative group cursor-pointer rounded-lg overflow-hidden bg-white/5 hover:bg-white/10 transition-all border border-white/10 hover:border-primary/50"
+                     data-apod-date="${apod.date}">
+                    <!-- Thumbnail -->
+                    <div class="aspect-video relative overflow-hidden">
+                        <img src="${thumbnailUrl}" 
+                             alt="${apod.title}"
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                             loading="lazy"
+                             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%231a1a1a%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22 font-size=%2220%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+                        
+                        ${isVideo ? `
+                            <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+                                <span class="material-symbols-outlined text-white" style="font-size: 3rem;">play_circle</span>
+                            </div>
+                        ` : ''}
+                    </div>
                     
-                    ${isVideo ? `
-                        <div class="absolute inset-0 flex items-center justify-center bg-black/30">
-                            <span class="material-symbols-outlined text-white" style="font-size: 3rem;">play_circle</span>
-                        </div>
-                    ` : ''}
+                    <!-- Info -->
+                    <div class="p-3">
+                        <h3 class="font-bold text-white text-sm line-clamp-2 mb-1">${apod.title}</h3>
+                        <p class="text-xs text-white/60">${apod.date}</p>
+                    </div>
+                    
+                    <!-- Remove button -->
+                    <button 
+                        class="favorite-remove-btn absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500/80 hover:bg-red-500 transition-colors opacity-0 group-hover:opacity-100"
+                        data-remove-date="${apod.date}"
+                        aria-label="Remove from favorites">
+                        <span class="material-symbols-outlined text-white text-sm">delete</span>
+                    </button>
                 </div>
-                
-                <!-- Info -->
-                <div class="p-3">
-                    <h3 class="font-bold text-white text-sm line-clamp-2 mb-1">${apod.title}</h3>
-                    <p class="text-xs text-white/60">${apod.date}</p>
-                </div>
-                
-                <!-- Remove button -->
-                <button 
-                    onclick="event.stopPropagation(); removeFavorite('${apod.date}')"
-                    class="absolute top-2 right-2 flex h-8 w-8 items-center justify-center rounded-full bg-red-500/80 hover:bg-red-500 transition-colors opacity-0 group-hover:opacity-100"
-                    aria-label="Remove from favorites">
-                    <span class="material-symbols-outlined text-white text-sm">delete</span>
-                </button>
-            </div>
-        `;
-    }).join('');
+            `;
+        }).join('');
+    
+    // Add event listeners to favorite items
+    const favoriteItems = grid.querySelectorAll('[data-apod-date]');
+    console.log('📌 Adding event listeners to', favoriteItems.length, 'favorite items');
+    
+    favoriteItems.forEach(item => {
+        const date = item.getAttribute('data-apod-date');
+        console.log('  - Item date:', date);
+        
+        item.addEventListener('click', (e) => {
+            // Don't trigger if clicking the remove button
+            if (e.target.closest('.favorite-remove-btn')) return;
+            
+            const clickedDate = item.getAttribute('data-apod-date');
+            console.log('🖱️ Clicked favorite item with date:', clickedDate);
+            loadFavoriteApod(clickedDate);
+        });
+    });
+    
+    // Add event listeners to remove buttons
+    grid.querySelectorAll('.favorite-remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const date = btn.getAttribute('data-remove-date');
+            removeFavorite(date);
+        });
+    });
 }
 
 function getYouTubeId(url) {
@@ -212,9 +256,21 @@ function getYouTubeId(url) {
 }
 
 function loadFavoriteApod(date) {
+    console.log('🔍 loadFavoriteApod called with date:', date);
+    
+    if (!date) {
+        console.error('❌ No date provided to loadFavoriteApod');
+        alert('Error: No date specified');
+        return;
+    }
+    
     closeFavoritesModal();
+    console.log('📅 Fetching APOD for date:', date);
     fetchAPOD(date);
 }
+
+// Make function globally accessible for HTML onclick
+window.loadFavoriteApod = loadFavoriteApod;
 
 function removeFavorite(date) {
     const favorites = getFavorites();
@@ -223,6 +279,9 @@ function removeFavorite(date) {
     renderFavorites();
     updateFavoriteButton();
 }
+
+// Make function globally accessible for HTML onclick
+window.removeFavorite = removeFavorite;
 
 // ========== APOD FETCHING ==========
 // This is the core function that fetches APOD data from our API
@@ -253,6 +312,9 @@ async function fetchAPODInternal(date) {
         
         // Update the DOM with the new APOD content
         updateAPODContent(apodData);
+        
+        // Update favorite button to reflect bookmark status
+        updateFavoriteButton();
         
         // Close the date picker modal
         closeModal();
@@ -481,7 +543,20 @@ function downloadAPOD() {
 // Favorites management using localStorage
 function getFavorites() {
     const favorites = localStorage.getItem('apod-favorites');
-    return favorites ? JSON.parse(favorites) : {};
+    if (!favorites) return {};
+    
+    const parsed = JSON.parse(favorites);
+    
+    // Migration: Check if old format (array of strings) and convert to new format (object)
+    if (Array.isArray(parsed)) {
+        console.warn('⚠️ Migrating old favorites format (array) to new format (object)');
+        console.log('Old favorites data:', parsed);
+        // Clear old format - can't migrate without full APOD data
+        localStorage.removeItem('apod-favorites');
+        return {};
+    }
+    
+    return parsed;
 }
 
 function saveFavorites(favorites) {
@@ -504,9 +579,11 @@ function toggleFavorite() {
     
     if (favorites[date]) {
         // Remove from favorites
+        console.log('➖ Removing from favorites:', date);
         delete favorites[date];
     } else {
         // Add to favorites - store full APOD data
+        console.log('➕ Adding to favorites:', date);
         favorites[date] = {
             title: state.currentApod.title,
             date: state.currentApod.date,
@@ -518,6 +595,7 @@ function toggleFavorite() {
     }
     
     saveFavorites(favorites);
+    console.log('💾 Favorites saved. Total count:', Object.keys(favorites).length);
     updateFavoriteButton();
 }
 
@@ -748,8 +826,6 @@ function init() {
             date: state.currentApod.date,
             media_type: state.currentApod.media_type
         });
-        // Update favorite button to reflect current state
-        updateFavoriteButton();
     } else {
         console.error('❌ window.initialApodData is not available!');
         console.log('window.initialApodData:', window.initialApodData);
@@ -758,8 +834,15 @@ function init() {
     // Set up all event listeners (button clicks, keyboard shortcuts, etc.)
     initEventListeners();
     
+    // Update favorite button after a short delay to ensure DOM is ready
+    setTimeout(() => {
+        updateFavoriteButton();
+        console.log('⭐ Favorite button updated for date:', state.currentApod?.date);
+    }, 100);
+    
     // Final state check
     console.log('📊 Current state.currentApod:', state.currentApod);
+    console.log('💾 Current favorites:', getFavorites());
 }
 
 // Wait for DOM to be ready before initializing
