@@ -197,6 +197,22 @@ function updateUI() {
             elements.loadingSpinner.classList.add('hidden');     // Hide spinner
         }
     }
+    
+    // Toggle skeleton loading in content card
+    const skeletonLoading = document.getElementById('skeleton-loading');
+    const apodContent = document.getElementById('apod-content');
+    
+    if (skeletonLoading && apodContent) {
+        if (state.isLoading) {
+            // Show skeleton, hide content
+            skeletonLoading.classList.remove('hidden');
+            apodContent.classList.add('hidden');
+        } else {
+            // Hide skeleton, show content
+            skeletonLoading.classList.add('hidden');
+            apodContent.classList.remove('hidden');
+        }
+    }
 }
 
 // ========== EVENT LISTENERS ==========
