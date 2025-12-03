@@ -6,6 +6,7 @@ const state = {
     selectedDate: null,      // Stores the currently selected date (YYYY-MM-DD format)
     isLoading: false,        // True when fetching data from API
     isModalOpen: false,      // True when date picker modal is visible
+    isFocusMode: false,      // True when UI is hidden for immersive viewing
     error: null,             // Stores error messages if something goes wrong
     currentApod: null        // Stores the currently displayed APOD data object
 };
@@ -213,6 +214,43 @@ function updateUI() {
             apodContent.classList.remove('hidden');
         }
     }
+    
+    // Toggle focus mode - hide/show UI elements
+    const header = document.getElementById('header');
+    const contentCard = document.getElementById('content-card');
+    const focusModeTrigger = document.getElementById('focus-mode-trigger');
+    
+    if (header && contentCard && focusModeTrigger) {
+        if (state.isFocusMode) {
+            // Focus mode: hide UI elements for immersive view
+            console.log('Entering focus mode - hiding UI');
+            header.style.opacity = '0';
+            header.style.pointerEvents = 'none';  // Disable clicks
+            contentCard.style.opacity = '0';
+            contentCard.style.pointerEvents = 'none';
+            
+            // After transition completes, fully hide elements
+            setTimeout(() => {
+                if (state.isFocusMode) {
+                    header.style.visibility = 'hidden';
+                    contentCard.style.visibility = 'hidden';
+                }
+            }, 300);
+        } else {
+            // Normal mode: show UI elements
+            console.log('Exiting focus mode - showing UI');
+            header.style.visibility = 'visible';
+            contentCard.style.visibility = 'visible';
+            
+            // Force a reflow then fade in
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.pointerEvents = 'auto';  // Enable clicks
+                contentCard.style.opacity = '1';
+                contentCard.style.pointerEvents = 'auto';
+            }, 10);
+        }
+    }
 }
 
 // ========== EVENT LISTENERS ==========
@@ -283,6 +321,23 @@ function initEventListeners() {
             closeModal();
         }
     });
+    
+    // FOCUS MODE TOGGLE
+    // Click ONLY on the background (not on cards, text, or buttons) to toggle immersive focus mode
+    const focusModeTrigger = document.getElementById('focus-mode-trigger');
+    
+    if (focusModeTrigger) {
+        focusModeTrigger.addEventListener('click', (e) => {
+            // Only toggle if modal is not open
+            if (!state.isModalOpen) {
+                console.log('Background clicked - toggling focus mode');
+                
+                // Toggle focus mode state
+                // This will hide/show header and content card for immersive viewing
+                setState({ isFocusMode: !state.isFocusMode });
+            }
+        });
+    }
 }
 
 // ========== INITIALIZATION ==========
