@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "An immersive web application displaying NASA's Astronomy Picture of the Day",
   "main": "app.js",
+  "type": "module",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
