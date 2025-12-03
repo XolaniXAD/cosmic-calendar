@@ -173,51 +173,51 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 - [x] Test: Use browser or Postman to call `http://localhost:3000/api/apod` and verify JSON response
 
 #### 1.3 Main Route Setup (`routes/index.js`)
-- [ ] Import required modules: `express`, `axios`, `dotenv`
-- [ ] Create Express router instance
-- [ ] Define `GET /` route that:
+- [x] Import required modules: `express`, `axios`, `dotenv`
+- [x] Create Express router instance
+- [x] Define `GET /` route that:
   - Fetches today's APOD from NASA API using Axios
   - Extracts: `title`, `date`, `explanation`, `url`, `media_type`, `copyright`
   - Renders `index.ejs` with APOD data object
   - Handles errors gracefully (render with fallback/error message)
-- [ ] Export the router
-- [ ] Test: Visit `http://localhost:3000/` and verify EJS template renders with real data
+- [x] Export the router
+- [x] Test: Visit `http://localhost:3000/` and verify EJS template renders with real data
 
 #### 1.4 Connect Routes in `app.js`
-- [ ] Import `api.js` route: `import apiRoutes from "./routes/api.js"`
-- [ ] Import `index.js` route: `import indexRoutes from "./routes/index.js"`
-- [ ] Register API routes: `app.use("/api", apiRoutes)`
-- [ ] Register main routes: `app.use("/", indexRoutes)`
-- [ ] Remove the temporary hardcoded `app.get('/')` route
-- [ ] Test: Restart server and verify both `/` and `/api/apod` work correctly
+- [x] Import `api.js` route: `import apiRoutes from "./routes/api.js"`
+- [x] Import `index.js` route: `import indexRoutes from "./routes/index.js"`
+- [x] Register API routes: `app.use("/api", apiRoutes)`
+- [x] Register main routes: `app.use("/", indexRoutes)`
+- [x] Remove the temporary hardcoded `app.get('/')` route
+- [x] Test: Restart server and verify both `/` and `/api/apod` work correctly
 
 ---
 
 ### Phase 2: Frontend Template (Server-Side Rendering)
 
 #### 2.1 Update EJS Template (`views/index.ejs`)
-- [ ] Replace hardcoded title with: `<%= apodData.title %>`
-- [ ] Replace hardcoded date with: `<%= apodData.date %>`
-- [ ] Replace hardcoded explanation with: `<%= apodData.explanation %>`
-- [ ] Add conditional rendering for `media_type`:
+- [x] Replace hardcoded title with: `<%= apodData.title %>`
+- [x] Replace hardcoded date with: `<%= apodData.date %>`
+- [x] Replace hardcoded explanation with: `<%= apodData.explanation %>`
+- [x] Add conditional rendering for `media_type`:
   - If `image`: `<img src="<%= apodData.url %>" />`
   - If `video`: `<iframe src="<%= apodData.url %>" />`
-- [ ] Update background image to use: `background-image: url("<%= apodData.url %>")`
-- [ ] Add copyright display if present: `<% if (apodData.copyright) { %> © <%= apodData.copyright %> <% } %>`
-- [ ] Test: Refresh page and verify dynamic content loads from NASA API
+- [x] Update background image to use: `background-image: url("<%= apodData.url %>")`
+- [x] Add copyright display if present: `<% if (apodData.copyright) { %> © <%= apodData.copyright %> <% } %>`
+- [x] Test: Refresh page and verify dynamic content loads from NASA API
 
 #### 2.2 Handle Error States in EJS
-- [ ] Accept optional `error` parameter in EJS
-- [ ] Add conditional block to display error message if API fails
-- [ ] Style error message to be visible over any background
-- [ ] Test: Break API key temporarily and verify error displays gracefully
+- [x] Accept optional `error` parameter in EJS
+- [x] Add conditional block to display error message if API fails
+- [x] Style error message to be visible over any background
+- [x] Test: Break API key temporarily and verify error displays gracefully
 
 ---
 
 ### Phase 3: Client-Side Interactivity (JavaScript)
 
 #### 3.1 State Management (`public/main.js`)
-- [ ] Define initial client state object:
+- [x] Define initial client state object:
   ```javascript
   const state = {
     selectedDate: null,  // Currently displayed date
@@ -227,42 +227,42 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
     error: null          // Error message
   };
   ```
-- [ ] Create `setState(updates)` function that merges updates and calls `updateUI()`
-- [ ] Create `updateUI()` function that syncs DOM with state
-- [ ] Test: Console.log state changes to verify reactivity
+- [x] Create `setState(updates)` function that merges updates and calls `updateUI()`
+- [x] Create `updateUI()` function that syncs DOM with state
+- [x] Test: Console.log state changes to verify reactivity
 
 #### 3.2 Date Picker Modal
-- [ ] Add HTML structure for modal in EJS:
+- [x] Add HTML structure for modal in EJS:
   - Modal overlay (full screen, semi-transparent)
   - Modal content container
   - Date input field (type="date")
   - Close button
   - Submit/Select button
-- [ ] Style modal with Tailwind (hidden by default, centered when visible)
-- [ ] In `main.js`, create `openModal()` function that sets `isModalOpen: true`
-- [ ] Create `closeModal()` function that sets `isModalOpen: false`
-- [ ] Bind calendar button click to `openModal()`
-- [ ] Bind close button and overlay click to `closeModal()`
-- [ ] Test: Click calendar button and verify modal opens/closes
+- [x] Style modal with Tailwind (hidden by default, centered when visible)
+- [x] In `main.js`, create `openModal()` function that sets `isModalOpen: true`
+- [x] Create `closeModal()` function that sets `isModalOpen: false`
+- [x] Bind calendar button click to `openModal()`
+- [x] Bind close button and overlay click to `closeModal()`
+- [x] Test: Click calendar button and verify modal opens/closes
 
 #### 3.3 Fetch Historical APOD
-- [ ] Create async function `fetchAPOD(date)` in `main.js`:
+- [x] Create async function `fetchAPOD(date)` in `main.js`:
   - Set `isLoading: true`
   - Use Axios to call `/api/apod?date=${date}`
   - On success: update DOM with new APOD data
   - On error: set `error` in state
   - Finally: set `isLoading: false`
-- [ ] Bind date selection to trigger `fetchAPOD(selectedDate)`
-- [ ] Update DOM elements: title, date, explanation, media (image or iframe)
-- [ ] Handle both image and video media types correctly
-- [ ] Test: Select different dates and verify content updates without page reload
+- [x] Bind date selection to trigger `fetchAPOD(selectedDate)`
+- [x] Update DOM elements: title, date, explanation, media (image or iframe)
+- [x] Handle both image and video media types correctly
+- [x] Test: Select different dates and verify content updates without page reload
 
 #### 3.4 Loading States
-- [ ] Add loading spinner HTML in EJS (initially hidden)
-- [ ] In `updateUI()`, show/hide spinner based on `state.isLoading`
-- [ ] Add disabled state to buttons while loading
+- [x] Add loading spinner HTML in EJS (initially hidden)
+- [x] In `updateUI()`, show/hide spinner based on `state.isLoading`
+- [x] Add disabled state to buttons while loading
 - [ ] Optional: Add skeleton loading for content card
-- [ ] Test: Select a date and verify spinner appears during fetch
+- [x] Test: Select a date and verify spinner appears during fetch
 
 ---
 
