@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>APOD Viewer: Earth Content</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Mono:wght@700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#208af3",
+                        "background-light": "#f5f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        heading: ["Space Mono", "monospace"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Core styling -->
+    <style type="text/tailwindcss">
+        body {
+            @apply font-display bg-background-light dark:bg-background-dark;
+        }
+    </style>
+</head>
+
+<body class="font-display">
+
+    <!-- Main Container Wrapper -->
+    <div
+        class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
+            role="img"
+            aria-label="High-resolution image of planet Earth from space with clouds, oceans, and continents."
+            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVe_3wKC8TAnV3xrtBJTIN3y4YGxpDx9ZKWphIIpEjpDibrocUxNVCI1laJhqAg9mQCminx3sPhiEs9XfjUqms0KM_5edGPFTRmmdb3LKK0kdJBRw0ELikRkhMeS09b-yy3E8iE68-_qqAmU86_l1VD7PEB2dDmgVOCPVbZXz8VCL_XbFBV4r9xIrcyd00y7jvzRsUd3Aqb6v2OEgYC0qi9lhBTB3ERO3TliNiLHdcFZW9BFIWvMN2-MkMNiWddvkwMqVwYNGu8hE");'>
+        </div>
+
+        <!-- Foreground Content -->
+        <div class="relative z-10 flex flex-col h-full">
+
+            <!-- Header -->
+            <header class="flex items-center justify-between p-4 sm:p-6 md:p-10">
+                <span class="font-heading text-lg font-bold text-white">
+                    APOD Viewer
+                </span>
+
+                <!-- Date Picker Button -->
+                <button
+                    class="flex h-10 w-10 items-center justify-center rounded-lg 
+                           bg-primary/20 text-primary hover:bg-primary/30 
+                           transition-colors active:scale-95">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                </button>
+            </header>
+
+            <!-- Main Content -->
+            <main class="flex-1 flex items-end justify-center p-4 sm:p-6 md:p-10">
+
+                <!-- Glass Card -->
+                <div
+                    class="w-full max-w-4xl p-6 sm:p-8 rounded-xl backdrop-blur-lg 
+                           bg-background-dark/70 text-white border border-white/10">
+
+                    <!-- Title Row -->
+                    <div class="flex flex-col md:flex-row items-start justify-between gap-6">
+
+                        <!-- Title + Date -->
+                        <div class="flex flex-col gap-2">
+                            <h1 class="text-3xl sm:text-4xl font-bold font-heading text-white">
+                                Our Living Planet Earth
+                            </h1>
+
+                            <h2 class="text-md sm:text-lg font-heading text-white/80">
+                                December 25, 2023
+                            </h2>
+                        </div>
+
+                        <!-- Share Button -->
+                        <button
+                            class="flex h-10 w-10 items-center justify-center rounded-lg 
+                                   bg-primary/20 text-primary hover:bg-primary/30 
+                                   transition-colors active:scale-95">
+                            <span class="material-symbols-outlined">share</span>
+                        </button>
+                    </div>
+
+                    <!-- Description Section -->
+                    <div class="mt-6 border-t border-white/10 pt-6">
+                        <p class="text-base leading-relaxed text-white/90">
+                            Earth, our home planet, is a world unlike any other. The third planet
+                            from the sun, Earth is the only place in the known universe confirmed
+                            to host life. With a rich tapestry of oceans, forests, and deserts, it
+                            teems with biodiversity. Its atmosphere, rich in nitrogen and oxygen,
+                            protects us from the sun's harmful radiation and creates the weather
+                            that shapes our world.
+
+                            This picture, taken from the International Space Station, showcases the
+                            fragile beauty of our planet—a solitary blue marble suspended in the
+                            vast, dark expanse of the cosmos.
+                        </p>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+
+</html>
