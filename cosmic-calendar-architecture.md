@@ -335,11 +335,11 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 - [x] Test: Use browser DevTools device emulation
 
 #### 6.4 Final Visual Polish
-- [ ] Verify readability overlay darkness (adjust opacity if needed)
-- [ ] Check color contrast ratios for accessibility
-- [ ] Add smooth transitions to all interactive elements
-- [ ] Review typography hierarchy (title vs. body text)
-- [ ] Test: View with different APOD images (bright vs. dark backgrounds)
+- [x] Verify readability overlay darkness (adjust opacity if needed)
+- [x] Check color contrast ratios for accessibility
+- [x] Add smooth transitions to all interactive elements
+- [x] Review typography hierarchy (title vs. body text)
+- [x] Test: View with different APOD images (bright vs. dark backgrounds)
 
 ---
 
@@ -356,11 +356,11 @@ Complete these tasks in order. Each task is atomic and testable. Check off each 
 - [ ] Test on 3 different browsers (Chrome, Firefox, Safari/Edge)
 
 #### 7.2 Code Quality
-- [ ] Remove all `console.log()` statements
-- [ ] Add comments to complex logic
-- [ ] Ensure consistent code formatting
-- [ ] Check for unused imports or variables
-- [ ] Verify `.env` is in `.gitignore`
+- [x] Remove all `console.log()` statements
+- [x] Add comments to complex logic
+- [x] Ensure consistent code formatting
+- [x] Check for unused imports or variables
+- [x] Verify `.env` is in `.gitignore`
 
 #### 7.3 Documentation
 - [ ] Update README.md with:

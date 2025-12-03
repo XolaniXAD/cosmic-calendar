@@ -238,7 +238,6 @@ function updateUI() {
     if (header && contentCard && focusModeTrigger) {
         if (state.isFocusMode) {
             // Focus mode: hide UI elements for immersive view
-            console.log('Entering focus mode - hiding UI');
             header.style.opacity = '0';
             header.style.pointerEvents = 'none';  // Disable clicks
             contentCard.style.opacity = '0';
@@ -253,7 +252,6 @@ function updateUI() {
             }, 300);
         } else {
             // Normal mode: show UI elements
-            console.log('Exiting focus mode - showing UI');
             header.style.visibility = 'visible';
             contentCard.style.visibility = 'visible';
             
@@ -345,8 +343,6 @@ function initEventListeners() {
         focusModeTrigger.addEventListener('click', (e) => {
             // Only toggle if modal is not open
             if (!state.isModalOpen) {
-                console.log('Background clicked - toggling focus mode');
-                
                 // Toggle focus mode state
                 // This will hide/show header and content card for immersive viewing
                 setState({ isFocusMode: !state.isFocusMode });
@@ -359,9 +355,6 @@ function initEventListeners() {
 // This code runs when the script loads and sets everything up
 
 function init() {
-    // Log to console so we know the script loaded successfully
-    console.log('🚀 APOD Viewer initialized');
-    
     // Set up all event listeners (button clicks, keyboard shortcuts, etc.)
     initEventListeners();
 }
