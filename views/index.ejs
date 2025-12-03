@@ -56,13 +56,28 @@
     <!-- Root container — controls background + full layout -->
     <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
 
-        <!-- Background image layer -->
-         <% if (locals.apod) { %>
-        <div
-            class="absolute inset-0 bg-center bg-no-repeat bg-cover z-0"
-            data-alt="A beautiful, high-resolution image of planet Earth from space, showing swirling white clouds over deep blue oceans and continents."
-            style='background-image: url("<%= locals.apod.url %>");'>
-        </div>
+        <!-- Background media layer -->
+        <% if (locals.apod) { %>
+            <% if (locals.apod.media_type === 'image') { %>
+                <!-- Image background -->
+                <div
+                    class="absolute inset-0 bg-center bg-no-repeat bg-cover z-0"
+                    data-alt="<%= locals.apod.title %>"
+                    style='background-image: url("<%= locals.apod.url %>");'>
+                </div>
+            <% } else if (locals.apod.media_type === 'video') { %>
+                <!-- Video background (YouTube embed) -->
+                <div class="absolute inset-0 z-0 overflow-hidden">
+                    <iframe
+                        class="absolute top-1/2 left-1/2 w-[177.77vh] h-[56.25vw] min-h-screen min-w-full -translate-x-1/2 -translate-y-1/2"
+                        src="<%= locals.apod.url %>"
+                        title="<%= locals.apod.title %>"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            <% } %>
         <% } %>
 
         <!-- Foreground content layer -->
