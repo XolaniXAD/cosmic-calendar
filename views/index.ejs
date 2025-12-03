@@ -6,44 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>APOD Viewer: Earth Content</title>
 
-    <!-- Tailwind CDN -->
+    <!-- TailwindCSS with plugins -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts preconnect & font families -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Mono:wght@700&display=swap"
-        rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Space+Mono:wght@700&display=swap" rel="stylesheet" />
 
-    <!-- Tailwind Custom Config -->
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#208af3",
+                        "primary": "#208af3",
                         "background-light": "#f5f7f8",
                         "background-dark": "#101922",
                     },
                     fontFamily: {
-                        display: ["Inter", "sans-serif"],
-                        heading: ["Space Mono", "monospace"],
+                        "display": ["Inter", "sans-serif"],
+                        "heading": ["Space Mono", "monospace"]
                     },
                     borderRadius: {
                         DEFAULT: "0.25rem",
                         lg: "0.5rem",
                         xl: "0.75rem",
-                        full: "9999px",
+                        full: "9999px"
                     },
                 },
             },
-        };
+        }
     </script>
 
-    <!-- Core styling -->
+    <!-- Tailwind styles applied via @apply -->
     <style type="text/tailwindcss">
         body {
             @apply font-display bg-background-light dark:bg-background-dark;
@@ -53,86 +53,91 @@
 
 <body class="font-display">
 
-    <!-- Main Container Wrapper -->
-    <div
-        class="relative flex min-h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden">
+    <!-- Root container — controls background + full layout -->
+    <div class="relative flex h-auto min-h-screen w-full flex-col bg-background-light dark:bg-background-dark group/design-root overflow-hidden">
 
-        <!-- Background Image -->
-        <div class="absolute inset-0 bg-center bg-cover bg-no-repeat z-0"
-            role="img"
-            aria-label="High-resolution image of planet Earth from space with clouds, oceans, and continents."
-            style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVe_3wKC8TAnV3xrtBJTIN3y4YGxpDx9ZKWphIIpEjpDibrocUxNVCI1laJhqAg9mQCminx3sPhiEs9XfjUqms0KM_5edGPFTRmmdb3LKK0kdJBRw0ELikRkhMeS09b-yy3E8iE68-_qqAmU86_l1VD7PEB2dDmgVOCPVbZXz8VCL_XbFBV4r9xIrcyd00y7jvzRsUd3Aqb6v2OEgYC0qi9lhBTB3ERO3TliNiLHdcFZW9BFIWvMN2-MkMNiWddvkwMqVwYNGu8hE");'>
+        <!-- Background image layer -->
+         <% if (locals.apod) { %>
+        <div
+            class="absolute inset-0 bg-center bg-no-repeat bg-cover z-0"
+            data-alt="A beautiful, high-resolution image of planet Earth from space, showing swirling white clouds over deep blue oceans and continents."
+            style='background-image: url("<%= locals.apod.url %>");'>
         </div>
+        <% } %>
 
-        <!-- Foreground Content -->
-        <div class="relative z-10 flex flex-col h-full">
+        <!-- Foreground content layer -->
+        <div class="relative z-10 flex h-full grow flex-col">
 
             <!-- Header -->
-            <header class="flex items-center justify-between p-4 sm:p-6 md:p-10">
-                <span class="font-heading text-lg font-bold text-white">
-                    APOD Viewer
-                </span>
+            <header class="flex items-center justify-between p-6 md:p-10">
+                <span class="font-heading text-lg font-bold text-white">APOD Viewer</span>
 
-                <!-- Date Picker Button -->
+                <!-- Calendar button (non-functional placeholder) -->
                 <button
-                    class="flex h-10 w-10 items-center justify-center rounded-lg 
-                           bg-primary/20 text-primary hover:bg-primary/30 
-                           transition-colors active:scale-95">
+                    class="flex h-10 min-w-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 text-primary transition-colors hover:bg-primary/30">
                     <span class="material-symbols-outlined">calendar_today</span>
                 </button>
             </header>
 
-            <!-- Main Content -->
-            <main class="flex-1 flex items-end justify-center p-4 sm:p-6 md:p-10">
+            <!-- Main content block -->
+            <main class="flex-1 flex items-end justify-center p-6 md:p-10">
 
-                <!-- Glass Card -->
-                <div
-                    class="w-full max-w-4xl p-6 sm:p-8 rounded-xl backdrop-blur-lg 
-                           bg-background-dark/70 text-white border border-white/10">
+                <!-- Glassmorphism content card -->
+                <div class="w-full max-w-4xl p-8 rounded-xl backdrop-blur-lg bg-background-dark/70 text-white border border-white/10">
 
-                    <!-- Title Row -->
+                    <!-- Title + share button row -->
                     <div class="flex flex-col md:flex-row items-start justify-between gap-6">
 
-                        <!-- Title + Date -->
+                        <% if (locals.apod) { %>
+                        <!-- Titles -->
                         <div class="flex flex-col gap-2">
-                            <h1 class="text-3xl sm:text-4xl font-bold font-heading text-white">
-                                Our Living Planet Earth
-                            </h1>
-
-                            <h2 class="text-md sm:text-lg font-heading text-white/80">
-                                December 25, 2023
-                            </h2>
+                            <h1 class="text-4xl font-bold font-heading text-white"><%= locals.apod.title %></h1>
+                            <h2 class="text-lg font-heading text-white/80"><%= locals.apod.date %></h2>
                         </div>
 
-                        <!-- Share Button -->
-                        <button
-                            class="flex h-10 w-10 items-center justify-center rounded-lg 
-                                   bg-primary/20 text-primary hover:bg-primary/30 
-                                   transition-colors active:scale-95">
+                        <!-- Share button (placeholder) -->
+                        <!-- <button
+                            class="flex h-10 min-w-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-lg bg-primary/20 text-primary transition-colors hover:bg-primary/30">
                             <span class="material-symbols-outlined">share</span>
-                        </button>
+                        </button> -->
                     </div>
 
-                    <!-- Description Section -->
+                    <!-- Divider + APOD Description -->
                     <div class="mt-6 border-t border-white/10 pt-6">
-                        <p class="text-base leading-relaxed text-white/90">
-                            Earth, our home planet, is a world unlike any other. The third planet
-                            from the sun, Earth is the only place in the known universe confirmed
-                            to host life. With a rich tapestry of oceans, forests, and deserts, it
-                            teems with biodiversity. Its atmosphere, rich in nitrogen and oxygen,
-                            protects us from the sun's harmful radiation and creates the weather
-                            that shapes our world.
-
-                            This picture, taken from the International Space Station, showcases the
-                            fragile beauty of our planet—a solitary blue marble suspended in the
-                            vast, dark expanse of the cosmos.
+                        <p class="text-base leading-relaxed text-white/90 font-display">
+                            <%= locals.apod.explanation %>
                         </p>
                     </div>
-
+                    <% } else { %>
+                        <!-- Error Message Display -->
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-3">
+                                <span class="material-symbols-outlined text-red-400 text-3xl">error</span>
+                                <h1 class="text-3xl font-bold font-heading text-white">Unable to Load APOD</h1>
+                            </div>
+                            
+                            <div class="mt-4 border-t border-red-400/20 pt-4">
+                                <p class="text-base leading-relaxed text-white/90 font-display mb-4">
+                                    <% if (locals.error) { %>
+                                        <%= locals.error %>
+                                    <% } else { %>
+                                        We couldn't retrieve the Astronomy Picture of the Day. This could be due to a network issue or a problem with the NASA API.
+                                    <% } %>
+                                </p>
+                                
+                                <button 
+                                    onclick="window.location.reload()" 
+                                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary/20 text-primary transition-colors hover:bg-primary/30 cursor-pointer">
+                                    <span class="material-symbols-outlined">refresh</span>
+                                    <span>Try Again</span>
+                                </button>
+                            </div>
+                        </div>
+                    <% } %>
                 </div>
             </main>
         </div>
     </div>
-</body>
 
+</body>
 </html>
